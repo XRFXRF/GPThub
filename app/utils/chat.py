@@ -1,11 +1,10 @@
 import traceback
 import openai
-from manage import Session
 
 # 接受用户文本，执行指令
 
 
-def chatWithGPT(text: str, info: Session, configData: dict):
+def chatWithGPT(text: str, info, configData: dict):
     try:
         if text.strip() == '':
             return '您好，我是人工智能助手，如果您有任何问题，请随时告诉我，我将尽力回答。\n如果您需要重置我们的会话，请回复`重置会话`'
@@ -47,7 +46,7 @@ def chatWithGPT(text: str, info: Session, configData: dict):
 
 
 # 调用API
-def chat(info: Session, configData: dict):
+def chat(info, configData: dict):
     try:
         if not configData['openai']['api_key']:
             return "请设置Api Key"
@@ -68,3 +67,11 @@ def chat(info: Session, configData: dict):
         ]
         # resp = str(e)
     return resp
+
+def promptSet(info,promptData:dict,promptCmd:str):
+    for prompt in promptData:
+        if prompt["cmd"]==promptCmd:
+            info.msg=[{"role": "system", "content": prompt['prompt']}]
+            return
+    print("NO such prompt cmd!")
+    

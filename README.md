@@ -6,8 +6,14 @@
 
 ## Edit the config
 
-Use your own API Key in config.json
+Use your own API Key in `config.json`
 
 ## Run
 
-`python manage.py`
+`set FLASK_APP=manage`
+
+`flask run`
+
+## Edit the preset
+
+Enter the cmd of the prompt in the `chatgpt_prompts.json`, then start the chat.
