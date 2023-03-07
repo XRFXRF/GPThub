@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPThub</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .chat-box {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .chat-box .message {
+            font-weight: bold;
+        }
+        .chat-box .time {
+            color: #999999;
+            font-size: 12px;
+        }
+        .input-group {
+            margin-top: 20px;
+        }
+        .input-group input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #CCCCCC;
+        }
+        .input-group button {
+            width: 18%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4caf61;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GPThub</h1>
+        <div id="chat-boxes"></div>
+        <div class="input-group">
+            <input type="text" id="message" placeholder="Type your message here...">
+            <button type="button" id="send-btn">Send</button>
+        </div>
+    </div>
+    <script>
+        // Connect to the server using Socket.IO
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Listen for the "connect" event
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+
+        // Listen for the "disconnect" event
+        socket.on('disconnect', function() {
+            console.log('Disconnected from server');
+        });
+
+        // Listen for the "message" event
+        socket.on('message', function(data) {
+            console.log('Received message:', data);
+
+            // Find the chat box or create a new one
+            var chatBox = $('#chat-box-' + data.from + '-' + data.to);
+            if (chatBox.length === 0) {
+                chatBox = $('<div class="chat-box"></div>');
+                chatBox.attr('id', 'chat-box-' + data.from + '-' + data.to);
+                $('#chat-boxes').append(chatBox);
+            }
+
+            // Add the message to the chat box
+            var message = $('<div class="message"></div>');
+            message.text(data.message);
+            var time = $('<div class="time"></div>');
+            time.text(data.time);
+            chatBox.append(message).append(time);
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop(chatBox[0].scrollHeight);
+        });
+
+        // Send a message when the "send" button is clicked
+        $('#send-btn').click(function() {
+            var message = $('#message').val().trim();
+            if (message !== '') {
+                from_id = window.location.pathname.split('/')[2];
+                to_id = window.location.pathname.split('/')[3];
+                var data = {
+            // Create the data object
+                'from': from_id,
+                'to': to_id,
+                'message': message
+            };
+
+            // Send the message to the server
+            socket.emit('message', data);
+
+            // Clear the input field
+            $('#message').val('');
+        }
+    });
+
+    // Send a message when the Enter key is pressed
+    $('#message').keypress(function(event) {
+        if (event.which === 13) {
+            $('#send-btn').click();
+        }
+    });
+</script>
+</body>
+</html>
