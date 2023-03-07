@@ -1,0 +1,23 @@
+{
+    "openai": {
+         "api_key": "",
+         "img_size": "1024x1024"
+    },
+    "chatgpt": {
+        "model": "gpt-3.5-turbo",
+        "temperature": 0.9,
+        "max_tokens": 3000,
+        "top_p": 1,
+        "echo": false,
+        "presence_penalty": 0,
+        "frequency_penalty": 0,
+        "preset": "你是我的人工智能助手，名字叫Smart Bot"
+    },
+        "text_to_image": {
+        "font_size": 30,
+        "width": 700,
+        "font_path": "fonts/sarasa-mono-sc-regular.ttf",
+        "offset_x": 50,
+        "offset_y": 50
+    }
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPT</title>
+  </head>
+  <body>
+    <h1>GPThub</h1>
+    <form method="POST">
+      <label for="text">Input:</label><br>
+      <input type="text" id="text" name="text"><br>
+      <input type="submit" value="Submit">
+    </form>
+    {% if processed_text %}
+      <p>Answer: {{ processed_text }}</p>
+    {% endif %}
+  </body>
+</html>
