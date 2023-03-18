@@ -1,1 +1,1 @@
-web: gunicorn till.app:socketio
+web: gunicorn till.manage:socketio
