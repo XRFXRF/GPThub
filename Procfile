@@ -1,1 +1,1 @@
-web: gunicorn GPTHUB:app
+web: gunicorn app:apps
