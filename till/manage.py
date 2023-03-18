@@ -1,16 +1,18 @@
 from flask import Flask, redirect, render_template, request
 from flask_socketio import SocketIO, emit
 import json
+import sys
+sys.path.append("..") 
 from app.utils import chat
 
 
-app = Flask(__name__, template_folder=r'.\app\templates')
+app = Flask(__name__, template_folder=r'..\app\templates')
 socketio = SocketIO(app)
 
-with open(r'app\config.json', "r", encoding='utf-8') as configFile:
+with open(r'..\app\config.json', "r", encoding='utf-8') as configFile:
     configData = json.load(configFile)
 
-with open(r'app\prompt\chatgpt_prompts.json', "r", encoding='utf-8') as promptFile:
+with open(r'..\app\prompt\chatgpt_prompts.json', "r", encoding='utf-8') as promptFile:
     promptData: list = json.load(promptFile)
 
 # session_config = {
