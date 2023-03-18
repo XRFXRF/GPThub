@@ -1,6 +1,6 @@
 {
     "openai": {
-        "api_key": "Your API Key",
+        "api_key": "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",
         "img_size": "1024x1024"
     },
     "chatgpt": {
